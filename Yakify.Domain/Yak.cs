@@ -24,6 +24,7 @@ public class Yak
 
     private static int ConvertAgeFromYearsToDays(double ageInYears) => (int)(YAK_YEAR_IN_DAYS * ageInYears);
 
+    public int Id { get; private set; }
     public required string Name { get; init; }
     public required Sex Sex { get; init; }
     public required int AgeInDays { get; init; }
