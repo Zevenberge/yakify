@@ -1,22 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
+using Yakify.Repository;
 using Yakify.TestBase;
 
-namespace Yakify.Repository.Tests;
+namespace Yakify.Api.Tests.Services;
 
-public abstract class RepositoryTests(ITestOutputHelper testOutput) : SqliteTests<YakifyDbContext>(testOutput)
+public abstract class ServiceTests(ITestOutputHelper testOutput) : SqliteTests<YakifyDbContext>(testOutput)
 {
     protected override void RegisterServices(IServiceCollection services, Action<DbContextOptionsBuilder> configure)
     {
-        services.AddRepositories(configure);
+        services.AddApplicationServices(configure);
     }
 
-    protected async Task RunInTransaction<TRepository>(Func<TRepository, Task> func)
-        where TRepository: class
+    protected async Task RunInTransaction(Func<IServiceProvider, Task> func)
     {
         await using var scope = ServiceProvider.CreateAsyncScope();
-        await func(scope.ServiceProvider.GetRequiredService<TRepository>());
+        await func(scope.ServiceProvider);
         await scope.ServiceProvider.GetRequiredService<IUnitOfWork>().SaveChangesAsync(CancellationToken.None);
     }
 }
