@@ -117,4 +117,20 @@ public class YakTests
         yak.HasDied(499).Should().BeFalse();
         yak.HasDied(500).Should().BeTrue();
     }
+
+    [Fact]
+    public void Yak_needs_to_be_shaved_on_day_0()
+    {
+        var yak = new Yak("Hairy-Yak", 1, Sex.Male);
+        yak.NeedsToBeShaved(0).Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(Sex.Female)]
+    [InlineData(Sex.Male)]
+    public void Both_sexes_need_to_be_shaved(Sex sex)
+    {
+        var yak = new Yak("Hairy-Yak", 1, sex);
+        yak.NeedsToBeShaved(0).Should().BeTrue();
+    }
 }

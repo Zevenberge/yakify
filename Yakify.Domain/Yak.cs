@@ -43,6 +43,11 @@ public class Yak
 
     public int ActualAgeInDaysAfterDay(int day) => day + AgeInDays;
 
+    public bool NeedsToBeShaved(int day)
+    {
+        return true;
+    }
+
     private const int YAK_YEAR_IN_DAYS = 100;
     private const int YAK_LIFE_IN_YEARS = 10;
 }
