@@ -42,6 +42,15 @@ public class YakTests
     }
 
     [Theory]
+    [InlineData(2.25, 75, 300)]
+    [InlineData(1, 15, 115)]
+    public void Yak_ages_over_time(double initialAgeInYears, int day, int actualAge)
+    {
+        var yak = new Yak("Growing-Yak", initialAgeInYears, Sex.Female);
+        yak.ActualAgeInDaysAfterDay(day).Should().Be(actualAge);
+    }
+
+    [Theory]
     [InlineData(0, 50.0)]
     [InlineData(1, 49.97)]
     [InlineData(10, 49.7)]
@@ -63,5 +72,31 @@ public class YakTests
     {
         var yak = new Yak("Milk-Yak", 2, Sex.Female);
         yak.GetMilkProduceOnDay(day).Should().Be(litersOfMilk);
+    }
+
+    [Fact]
+    public void Male_yaks_dont_produce_milk()
+    {
+        var yak = new Yak("Bulky-Yak", 2, Sex.Male);
+        yak.GetMilkProduceOnDay(0).Should().Be(0);
+        yak.GetMilkProduceOnDay(10).Should().Be(0);
+        yak.GetMilkProduceOnDay(100).Should().Be(0);
+    }
+
+    [Fact]
+    public void Yak_dies_the_day_they_age_10_in_years()
+    {
+        var yak = new Yak("Old-Yak", 0, Sex.Female);
+        yak.HasDied(999).Should().BeFalse();
+        yak.HasDied(1_000).Should().BeTrue();
+        yak.HasDied(1_001).Should().BeTrue();
+    }
+
+    [Fact]
+    public void Yak_dies_the_day_they_age_10_in_years_accounting_for_their_initial_age()
+    {
+        var yak = new Yak("Old-Yak", 5, Sex.Female);
+        yak.HasDied(499).Should().BeFalse();
+        yak.HasDied(500).Should().BeTrue();
     }
 }

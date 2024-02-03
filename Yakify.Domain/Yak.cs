@@ -12,7 +12,7 @@ public class Yak
         ThrowOnInvalidInput(name, age);
         Name = name;
         Sex = sex;
-        AgeInDays = (int)(100 * age);
+        AgeInDays = (int)(YAK_YEAR_IN_DAYS * age);
     }
 
     private static void ThrowOnInvalidInput(string name, double age)
@@ -27,6 +27,20 @@ public class Yak
 
     public double GetMilkProduceOnDay(int day)
     {
-        return 50.0 - (day + AgeInDays) * 0.03;
+        if(Sex == Sex.Male) return 0;
+        return 50.0 - ActualAgeInDaysAfterDay(day) * 0.03;
     }
+
+    public bool HasDied(int day)
+    {
+        return ActualAgeInDaysAfterDay(day) >= (YAK_LIFE_IN_YEARS * YAK_YEAR_IN_DAYS);
+    }
+
+    public int ActualAgeInDaysAfterDay(int day)
+    {
+        return day + AgeInDays;
+    }
+
+    private const int YAK_YEAR_IN_DAYS = 100;
+    private const int YAK_LIFE_IN_YEARS = 10;
 }
