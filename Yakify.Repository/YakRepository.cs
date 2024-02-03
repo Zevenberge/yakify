@@ -19,4 +19,10 @@ public class YakRepository(YakifyDbContext context, ILogger<YakRepository> logge
         logger.LogDebug("Retreiving all yaks");
         return context.Yak.ToArrayAsync(cancellationToken);
     }
+
+    public Task DeleteAll(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Deleting all yaks");
+        return context.Yak.ExecuteDeleteAsync(cancellationToken);
+    }
 }
