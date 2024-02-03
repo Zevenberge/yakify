@@ -10,12 +10,11 @@ public class YakRepositoryTests(ITestOutputHelper testOutput) : RepositoryTests(
     {
         var yak1 = new Yak("Yak-1", 1, Sex.Female);
         var yak2 = new Yak("Yak-2", 2, Sex.Male);
-        await RunInScope<IYakRepository>(async repository =>
+        await RunInTransaction<IYakRepository>(async repository =>
         {
             await repository.AddRange([yak1, yak2], CancellationToken.None);
-            await repository.UnitOfWork.SaveChangesAsync(CancellationToken.None);
         });
-        await RunInScope<IYakRepository>(async repository => 
+        await RunInTransaction<IYakRepository>(async repository => 
         {
             var yaks = await repository.GetAll(CancellationToken.None);
             yaks.Should().HaveCount(2);
@@ -31,17 +30,15 @@ public class YakRepositoryTests(ITestOutputHelper testOutput) : RepositoryTests(
     {
          var yak1 = new Yak("Yak-1", 1, Sex.Female);
         var yak2 = new Yak("Yak-2", 2, Sex.Male);
-        await RunInScope<IYakRepository>(async repository =>
+        await RunInTransaction<IYakRepository>(async repository =>
         {
             await repository.AddRange([yak1, yak2], CancellationToken.None);
-            await repository.UnitOfWork.SaveChangesAsync(CancellationToken.None);
         });
-        await RunInScope<IYakRepository>(async repository => 
+        await RunInTransaction<IYakRepository>(async repository => 
         {
             await repository.DeleteAll(CancellationToken.None);
-            await repository.UnitOfWork.SaveChangesAsync(CancellationToken.None);
         });
-        await RunInScope<IYakRepository>(async repository => 
+        await RunInTransaction<IYakRepository>(async repository => 
         {
             var yaks = await repository.GetAll(CancellationToken.None);
             yaks.Should().HaveCount(0);

@@ -2,7 +2,7 @@ using Yakify.Domain;
 
 namespace Yakify.Repository;
 
-public interface IYakRepository: IRepository
+public interface IYakRepository
 {
     Task AddRange(Yak[] yaks, CancellationToken cancellationToken);
     Task<Yak[]> GetAll(CancellationToken cancellationToken);

@@ -9,5 +9,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<YakifyDbContext>(configure);
         services.AddScoped<IYakRepository, YakRepository>();
+        services.AddScoped<IUnitOfWork>(svc => svc.GetRequiredService<YakifyDbContext>());
     }
 }

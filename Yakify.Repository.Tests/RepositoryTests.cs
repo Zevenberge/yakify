@@ -1,12 +1,12 @@
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Xunit.Abstractions;
+using Yakify.TestBase;
 
 namespace Yakify.Repository.Tests;
 
-public abstract class RepositoryTests: IDisposable
+public abstract class RepositoryTests: SqliteTests
 {
     protected RepositoryTests(ITestOutputHelper testOutput)
     {
@@ -16,40 +16,19 @@ public abstract class RepositoryTests: IDisposable
                 .WriteTo.TestOutput(testOutput)
                 .CreateLogger()
         ));
-        _keepAliveConnection = new SqliteConnection($"DataSource={Guid.NewGuid()};mode=memory;cache=shared");
-        _keepAliveConnection.Open();
-        services.AddRepositories(opts => opts.UseSqlite(_keepAliveConnection));
+        
+        services.AddRepositories(opts => opts.UseSqlite(Connection));
         _serviceProvider = services.BuildServiceProvider();
         _serviceProvider.GetRequiredService<YakifyDbContext>().Database.EnsureCreated();
     }
 
     private readonly IServiceProvider _serviceProvider;
-    private readonly SqliteConnection _keepAliveConnection;
-    private bool disposedValue;
 
-    protected async Task RunInScope<TRepository>(Func<TRepository, Task> func)
+    protected async Task RunInTransaction<TRepository>(Func<TRepository, Task> func)
         where TRepository: class
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
         await func(scope.ServiceProvider.GetRequiredService<TRepository>());
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!disposedValue)
-        {
-            if (disposing)
-            {
-                _keepAliveConnection.Close();
-            }
-            disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
+        await scope.ServiceProvider.GetRequiredService<IUnitOfWork>().SaveChangesAsync(CancellationToken.None);
     }
 }

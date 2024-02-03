@@ -6,8 +6,6 @@ namespace Yakify.Repository;
 
 public class YakRepository(YakifyDbContext context, ILogger<YakRepository> logger) : IYakRepository
 {
-    public IUnitOfWork UnitOfWork => context;
-
     public Task AddRange(Yak[] yaks, CancellationToken cancellationToken)
     {
         logger.LogInformation("Adding {AmountOfYaks}", yaks.Length);
