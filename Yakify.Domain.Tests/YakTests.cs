@@ -125,6 +125,20 @@ public class YakTests
         yak.NeedsToBeShaved(0).Should().BeTrue();
     }
 
+    [Fact]
+    public void Yak_of_less_than_a_year_old_does_not_need_to_be_shaved()
+    {
+        var yak = new Yak("Young-Yak", 0.99, Sex.Male);
+        yak.NeedsToBeShaved(0).Should().BeFalse();
+    }
+
+    [Fact]
+    public void As_soon_as_a_yak_turns_1_it_needs_to_be_shaved()
+    {
+        var yak = new Yak("Young-Yak", 0.99, Sex.Male);
+        yak.NeedsToBeShaved(1).Should().BeTrue();
+    }
+
     [Theory]
     [InlineData(Sex.Female)]
     [InlineData(Sex.Male)]
@@ -132,5 +146,12 @@ public class YakTests
     {
         var yak = new Yak("Hairy-Yak", 1, sex);
         yak.NeedsToBeShaved(0).Should().BeTrue();
+    }
+
+    [Fact]
+    public void After_a_yak_it_shaved_it_cannot_be_shaved_until_its_hair_regrows()
+    {
+        var yak = new Yak("Hairy-Yak", 1, Sex.Male);
+        yak.NeedsToBeShaved(1).Should().BeFalse();
     }
 }

@@ -45,9 +45,16 @@ public class Yak
 
     public bool NeedsToBeShaved(int day)
     {
-        return true;
+        return day == DayOfFirstShave();
+    }
+
+    private int DayOfFirstShave()
+    {
+        const int dayEligableForShaving = AGE_OF_FIRST_SHAVE_IN_YEARS * YAK_YEAR_IN_DAYS;
+        return Math.Max(0, dayEligableForShaving - AgeInDays);
     }
 
     private const int YAK_YEAR_IN_DAYS = 100;
     private const int YAK_LIFE_IN_YEARS = 10;
+    private const int AGE_OF_FIRST_SHAVE_IN_YEARS = 1;
 }
