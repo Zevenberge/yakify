@@ -154,4 +154,25 @@ public class YakTests
         var yak = new Yak("Hairy-Yak", 1, Sex.Male);
         yak.NeedsToBeShaved(1).Should().BeFalse();
     }
+
+    [Fact]
+    public void After_the_hair_regrows_the_yak_can_be_shaved_again()
+    {
+        var yak = new Yak("Hairy-Yak", 1, Sex.Male);
+        yak.NeedsToBeShaved(10).Should().BeTrue();
+        yak.NeedsToBeShaved(11).Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(1, 10)]
+    [InlineData(2, 11)]
+    [InlineData(3, 12)]
+    [InlineData(4, 13)]
+    public void Time_for_hair_to_regrow_is_dependent_on_age(int age, int dayOfSecondShave)
+    {
+        var yak = new Yak("Hairy-Yak", age, Sex.Male);
+        yak.NeedsToBeShaved(dayOfSecondShave - 1).Should().BeFalse();
+        yak.NeedsToBeShaved(dayOfSecondShave).Should().BeTrue();
+        yak.NeedsToBeShaved(dayOfSecondShave + 1).Should().BeFalse();
+    }
 }

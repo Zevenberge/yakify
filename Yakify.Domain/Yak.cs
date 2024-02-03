@@ -45,13 +45,28 @@ public class Yak
 
     public bool NeedsToBeShaved(int day)
     {
-        return day == DayOfFirstShave();
+        return GetShavingSchedule().Contains(day);
+    }
+
+    private IEnumerable<int> GetShavingSchedule()
+    {
+        int day = DayOfFirstShave();
+        while(!HasDied(day))
+        {
+            yield return day;
+            day += ShavingInterval(day);
+        }
     }
 
     private int DayOfFirstShave()
     {
         const int dayEligableForShaving = AGE_OF_FIRST_SHAVE_IN_YEARS * YAK_YEAR_IN_DAYS;
         return Math.Max(0, dayEligableForShaving - AgeInDays);
+    }
+
+    private int ShavingInterval(int dayOfShaving)
+    {
+        return 9 + ActualAgeInDaysAfterDay(dayOfShaving) / 100;
     }
 
     private const int YAK_YEAR_IN_DAYS = 100;
