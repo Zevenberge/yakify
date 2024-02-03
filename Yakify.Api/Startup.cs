@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Yakify.Api.Services;
 using Yakify.Repository;
 
@@ -10,6 +11,7 @@ public static class Startup
 {
     public static WebApplication Configure(this WebApplicationBuilder builder)
     {
+        builder.AddLogging();
         builder.Services.AddApplicationServices(options =>
             options.UseSqlServer(builder.Configuration["ConnectionString"], 
                 o => o.MigrationsAssembly(typeof(YakifyDbContext).Assembly.FullName)
@@ -17,6 +19,14 @@ public static class Startup
         var app = builder.Build();
         app.ConfigureRequestPipeline();
         return app;
+    }
+
+    private static void AddLogging(this WebApplicationBuilder builder)
+    {
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .CreateLogger();
+        builder.Host.UseSerilog();
     }
 
     public static void AddApplicationServices(this IServiceCollection services, Action<DbContextOptionsBuilder> configure)
