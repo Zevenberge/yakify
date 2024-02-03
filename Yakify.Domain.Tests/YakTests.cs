@@ -12,4 +12,13 @@ public class YakTests
         yak.AgeInDays.Should().Be(ageInDays);
         yak.Sex.Should().Be(sex);
     }
+
+    [Theory]
+    [InlineData(3.14, 314)]
+    [InlineData(2.73546, 273)]
+    public void Age_is_rounded_down_to_whole_days(double ageInYears, int ageInDays)
+    {
+        var yak = new Yak("Test-Yak", ageInYears, Sex.Female);
+        yak.AgeInDays.Should().Be(ageInDays);
+    }
 }

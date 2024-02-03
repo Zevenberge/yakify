@@ -11,7 +11,7 @@ public class Yak
     {
         Name = name;
         Sex = sex;
-        AgeInDays = 100 * (int)age;
+        AgeInDays = (int)(100 * age);
     }
 
     public required string Name { get; init; }
