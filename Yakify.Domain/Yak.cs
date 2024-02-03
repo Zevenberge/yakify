@@ -24,4 +24,9 @@ public class Yak
     public required string Name { get; init; }
     public required Sex Sex { get; init; }
     public required int AgeInDays { get; init; }
+
+    public double GetMilkProduceOnDay(int day)
+    {
+        return 50.0 - (day + AgeInDays) * 0.03;
+    }
 }

@@ -40,4 +40,28 @@ public class YakTests
             .Should().Throw<YakException>()
                 .WithMessage(Errors.YAK_NAME_CANNOT_BE_EMPTY);
     }
+
+    [Theory]
+    [InlineData(0, 50.0)]
+    [InlineData(1, 49.97)]
+    [InlineData(10, 49.7)]
+    [InlineData(50, 48.5)]
+    [InlineData(999, 20.03)]
+    public void Female_yaks_produce_milk_depending_on_age(int day, double litersOfMilk)
+    {
+        var yak = new Yak("Milk-Yak", 0, Sex.Female);
+        yak.GetMilkProduceOnDay(day).Should().Be(litersOfMilk);
+    }
+
+    [Theory]
+    [InlineData(0, 44.0)]
+    [InlineData(1, 43.97)]
+    [InlineData(10, 43.7)]
+    [InlineData(50, 42.5)]
+    [InlineData(799, 20.03)]
+    public void Female_yaks_produce_milk_depending_on_age_and_their_initial_age(int day, double litersOfMilk)
+    {
+        var yak = new Yak("Milk-Yak", 2, Sex.Female);
+        yak.GetMilkProduceOnDay(day).Should().Be(litersOfMilk);
+    }
 }
