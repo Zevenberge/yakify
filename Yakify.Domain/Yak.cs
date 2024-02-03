@@ -71,6 +71,6 @@ public class Yak
     }
 
     private const int YAK_YEAR_IN_DAYS = 100;
-    private const int YAK_LIFE_IN_YEARS = 10;
+    public const int YAK_LIFE_IN_YEARS = 10;
     private const int AGE_OF_FIRST_SHAVE_IN_YEARS = 1;
 }
