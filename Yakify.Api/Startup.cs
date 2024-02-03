@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Yakify.Api.Services;
 using Yakify.Repository;
@@ -9,7 +11,9 @@ public static class Startup
     public static WebApplication Configure(this WebApplicationBuilder builder)
     {
         builder.Services.AddApplicationServices(options =>
-            options.UseSqlServer(builder.Configuration["ConnectionString"]));
+            options.UseSqlServer(builder.Configuration["ConnectionString"], 
+                o => o.MigrationsAssembly(typeof(YakifyDbContext).Assembly.FullName)
+            ));
         var app = builder.Build();
         app.ConfigureRequestPipeline();
         return app;
@@ -19,6 +23,11 @@ public static class Startup
     {
         services.AddDomainServices();
         services.AddRepositories(configure);
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseUpper));
+            });
         services.AddSwagger();
     }
 
@@ -27,5 +36,6 @@ public static class Startup
         app.UseSwaggerInDevelopment();
         app.UseHttpsRedirection();
         app.UseTransaction();
+        app.MapControllers();
     }
 }
