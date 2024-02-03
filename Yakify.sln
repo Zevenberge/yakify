@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.Repository", "Yakify
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.Repository.Tests", "Yakify.Repository.Tests\Yakify.Repository.Tests.csproj", "{5F530C77-DE41-4586-9546-7B4511DE2D9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.Api", "Yakify.Api\Yakify.Api.csproj", "{9F1505C2-0308-40A2-B4BB-796DE2617C06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.Api.Tests", "Yakify.Api.Tests\Yakify.Api.Tests.csproj", "{39539670-6DD0-46DA-8E70-1F85DE19310B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{5F530C77-DE41-4586-9546-7B4511DE2D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F530C77-DE41-4586-9546-7B4511DE2D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F530C77-DE41-4586-9546-7B4511DE2D9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1505C2-0308-40A2-B4BB-796DE2617C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1505C2-0308-40A2-B4BB-796DE2617C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1505C2-0308-40A2-B4BB-796DE2617C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1505C2-0308-40A2-B4BB-796DE2617C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39539670-6DD0-46DA-8E70-1F85DE19310B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39539670-6DD0-46DA-8E70-1F85DE19310B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39539670-6DD0-46DA-8E70-1F85DE19310B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39539670-6DD0-46DA-8E70-1F85DE19310B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
