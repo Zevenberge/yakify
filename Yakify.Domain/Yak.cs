@@ -12,14 +12,17 @@ public class Yak
         ThrowOnInvalidInput(name, age);
         Name = name;
         Sex = sex;
-        AgeInDays = (int)(YAK_YEAR_IN_DAYS * age);
+        AgeInDays = ConvertAgeFromYearsToDays(age);
     }
 
     private static void ThrowOnInvalidInput(string name, double age)
     {
         if(string.IsNullOrWhiteSpace(name)) throw new YakException(Errors.YAK_NAME_CANNOT_BE_EMPTY);
         if(age < 0) throw new YakException(Errors.YAK_AGE_CANNOT_BE_NEGATIVE);
+        if(IsDeadOnActualAge(ConvertAgeFromYearsToDays(age))) throw new YakException(Errors.YAK_AGE_BEYOND_LIFE_EXPECTANCY);
     }
+
+    private static int ConvertAgeFromYearsToDays(double ageInYears) => (int)(YAK_YEAR_IN_DAYS * ageInYears);
 
     public required string Name { get; init; }
     public required Sex Sex { get; init; }
@@ -27,19 +30,18 @@ public class Yak
 
     public double GetMilkProduceOnDay(int day)
     {
-        if(Sex == Sex.Male) return 0;
+        if(Sex == Sex.Male || HasDied(day)) return 0;
         return 50.0 - ActualAgeInDaysAfterDay(day) * 0.03;
     }
 
-    public bool HasDied(int day)
+    public bool HasDied(int day) => IsDeadOnActualAge(ActualAgeInDaysAfterDay(day));
+
+    private static bool IsDeadOnActualAge(int ageInDays)
     {
-        return ActualAgeInDaysAfterDay(day) >= (YAK_LIFE_IN_YEARS * YAK_YEAR_IN_DAYS);
+        return ageInDays >= (YAK_LIFE_IN_YEARS * YAK_YEAR_IN_DAYS);
     }
 
-    public int ActualAgeInDaysAfterDay(int day)
-    {
-        return day + AgeInDays;
-    }
+    public int ActualAgeInDaysAfterDay(int day) => day + AgeInDays;
 
     private const int YAK_YEAR_IN_DAYS = 100;
     private const int YAK_LIFE_IN_YEARS = 10;

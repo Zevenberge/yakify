@@ -30,6 +30,17 @@ public class YakTests
                 .WithMessage(Errors.YAK_AGE_CANNOT_BE_NEGATIVE);
     }
 
+    [Fact]
+    public void Dead_yak_cannot_be_created()
+    {
+        // In this world, yaks physically don't age beyond 10. Otherwise
+        // the app would be telling you that the yak next you couldn't
+        // possibly be there.
+        FluentActions.Invoking(() => new Yak("Zombie-Yak", 10, Sex.Female))
+            .Should().Throw<YakException>()
+                .WithMessage(Errors.YAK_AGE_BEYOND_LIFE_EXPECTANCY);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData(null)]
@@ -81,6 +92,13 @@ public class YakTests
         yak.GetMilkProduceOnDay(0).Should().Be(0);
         yak.GetMilkProduceOnDay(10).Should().Be(0);
         yak.GetMilkProduceOnDay(100).Should().Be(0);
+    }
+
+    [Fact]
+    public void Dead_yaks_dont_produce_milk()
+    {
+        var yak = new Yak("Milk-Yak", 0, Sex.Female);
+        yak.GetMilkProduceOnDay(1_000).Should().Be(0);
     }
 
     [Fact]
