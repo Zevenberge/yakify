@@ -175,4 +175,11 @@ public class YakTests
         yak.NeedsToBeShaved(dayOfSecondShave).Should().BeTrue();
         yak.NeedsToBeShaved(dayOfSecondShave + 1).Should().BeFalse();
     }
+
+    [Fact]
+    public void Dead_yaks_will_not_be_shaved()
+    {
+        var yak = new Yak("Last-Yak", 9.82, Sex.Male);
+        yak.NeedsToBeShaved(18).Should().BeFalse();
+    }
 }
