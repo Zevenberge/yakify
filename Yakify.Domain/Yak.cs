@@ -1,12 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Yakify.Domain;
+﻿namespace Yakify.Domain;
 
 public class Yak
 {
     private Yak() {}
 
-    [SetsRequiredMembers]
     public Yak(string name, double age, Sex sex)
     {
         ThrowOnInvalidInput(name, age);
@@ -23,9 +20,9 @@ public class Yak
     }
 
     public int Id { get; private set; }
-    public required string Name { get; init; }
-    public required Sex Sex { get; init; }
-    public required int AgeInDays { get; init; }
+    public string Name { get; private set; } = "";
+    public Sex Sex { get; private set; }
+    public int AgeInDays { get; private set; }
 
     public double GetMilkProduceOnDay(int day)
     {
