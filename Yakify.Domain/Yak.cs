@@ -12,17 +12,15 @@ public class Yak
         ThrowOnInvalidInput(name, age);
         Name = name;
         Sex = sex;
-        AgeInDays = ConvertAgeFromYearsToDays(age);
+        AgeInDays = age.InDays();
     }
 
     private static void ThrowOnInvalidInput(string name, double age)
     {
         if(string.IsNullOrWhiteSpace(name)) throw new YakException(Errors.YAK_NAME_CANNOT_BE_EMPTY);
         if(age < 0) throw new YakException(Errors.YAK_AGE_CANNOT_BE_NEGATIVE);
-        if(IsDeadOnActualAge(ConvertAgeFromYearsToDays(age))) throw new YakException(Errors.YAK_AGE_BEYOND_LIFE_EXPECTANCY);
+        if(IsDeadOnActualAge(age.InDays())) throw new YakException(Errors.YAK_AGE_BEYOND_LIFE_EXPECTANCY);
     }
-
-    private static int ConvertAgeFromYearsToDays(double ageInYears) => (int)(YAK_YEAR_IN_DAYS * ageInYears);
 
     public int Id { get; private set; }
     public required string Name { get; init; }
@@ -43,10 +41,18 @@ public class Yak
     }
 
     public int ActualAgeInDaysAfterDay(int day) => day + AgeInDays;
+    public double ActualAgeInYearsAfterDay(int day) => ActualAgeInDaysAfterDay(day).InYears();
 
     public bool NeedsToBeShaved(int day)
     {
         return GetShavingSchedule().Contains(day);
+    }
+
+    public double? AgeLastShavedInYears(int day)
+    {
+        var dayLastShaved = GetShavingSchedule().Cast<int?>().LastOrDefault(d => d <= day);
+        if(dayLastShaved == null) return null;
+        return ActualAgeInYearsAfterDay(dayLastShaved.Value);
     }
 
     private IEnumerable<int> GetShavingSchedule()
@@ -70,7 +76,7 @@ public class Yak
         return 9 + ActualAgeInDaysAfterDay(dayOfShaving) / 100;
     }
 
-    private const int YAK_YEAR_IN_DAYS = 100;
+    internal const int YAK_YEAR_IN_DAYS = 100;
     public const int YAK_LIFE_IN_YEARS = 10;
     private const int AGE_OF_FIRST_SHAVE_IN_YEARS = 1;
 }

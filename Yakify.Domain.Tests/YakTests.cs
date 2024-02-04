@@ -62,6 +62,15 @@ public class YakTests
     }
 
     [Theory]
+    [InlineData(2.25, 75, 3.00)]
+    [InlineData(1, 15, 1.15)]
+    public void Yak_age_can_be_calculated_in_years(double initialAgeInYears, int day, double actualAge)
+    {
+        var yak = new Yak("Growing-Yak", initialAgeInYears, Sex.Female);
+        yak.ActualAgeInYearsAfterDay(day).Should().Be(actualAge);
+    }
+
+    [Theory]
     [InlineData(0, 50.0)]
     [InlineData(1, 49.97)]
     [InlineData(10, 49.7)]
@@ -181,5 +190,39 @@ public class YakTests
     {
         var yak = new Yak("Last-Yak", 9.82, Sex.Male);
         yak.NeedsToBeShaved(18).Should().BeFalse();
+    }
+
+    [Fact]
+    public void Age_last_shaved_is_null_when_never_shaved()
+    {
+        var yak = new Yak("Bald-Yak", 0, Sex.Male);
+        yak.AgeLastShavedInYears(0).Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(1.0)]
+    [InlineData(2.0)]
+    [InlineData(3.0)]
+    public void Age_last_shaved_is_its_inital_age_when_shaved_on_first_day(double ageInYears)
+    {
+        var yak = new Yak("Hairy-Yak", ageInYears, Sex.Male);
+        yak.AgeLastShavedInYears(0).Should().Be(ageInYears);
+    }
+
+    [Theory]
+    [InlineData(1.0, 2, 1.0)]
+    [InlineData(1.0, 11, 1.10)]
+    [InlineData(2.0, 11, 2.11)]
+    public void Age_last_shaved_returns_the_age_in_years_at_the_day_of_shaving(double ageInYears, int day, double ageLastShavedInYears)
+    {
+        var yak = new Yak("Hairy-Yak", ageInYears, Sex.Male);
+        yak.AgeLastShavedInYears(day).Should().Be(ageLastShavedInYears);
+    }
+
+    [Fact]
+    public void Age_last_shaved_returns_the_age_of_first_shave()
+    {
+        var yak = new Yak("Adolescent-Yak", 0.9, Sex.Male);
+        yak.AgeLastShavedInYears(15).Should().Be(1.0);
     }
 }
