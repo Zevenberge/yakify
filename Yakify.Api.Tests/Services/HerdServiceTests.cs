@@ -131,6 +131,39 @@ public class HerdServiceTests(ITestOutputHelper testOutput) : ServiceTests(testO
         });
     }
 
+    [Fact]
+    public async Task Total_produce_sums_the_produce_of_the_whole_herd()
+    {
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            await service.LoadNewHerd(Herd(
+                ("Yak-1", 4, Sex.Female),
+                ("Yak-2", 8, Sex.Female),
+                ("Yak-3", 9.5, Sex.Female)
+            ), CancellationToken.None);
+        });
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            var produce = await service.GetTotalProduce(15, CancellationToken.None);
+            produce.Milk.Should().BeApproximately(1357.2, 1E-10);
+            produce.Skins.Should().Be(4);
+        });
+    }
+
+    [Fact]
+    public async Task Total_produce_is_0_without_yaks()
+    {
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            var produce = await service.GetTotalProduce(15, CancellationToken.None);
+            produce.Milk.Should().Be(0);
+            produce.Skins.Should().Be(0);
+        });
+    }
+
     private CreateHerdDto Herd(params (string Name, double Age, Sex Sex)[] herd)
     {
         return new CreateHerdDto(herd.Select(yak => new CreateYakDto

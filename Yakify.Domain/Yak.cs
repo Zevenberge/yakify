@@ -50,22 +50,22 @@ public class Yak
 
     public bool NeedsToBeShaved(int day)
     {
-        return GetShavingScheduleUpTo(day).Contains(day);
+        return GetShavingScheduleUpToAndIncluding(day).Contains(day);
     }
 
     public double? AgeLastShavedInYears(int day)
     {
-        var dayLastShaved = GetShavingScheduleUpTo(day).Cast<int?>().LastOrDefault();
+        var dayLastShaved = GetShavingScheduleUpToAndIncluding(day).Cast<int?>().LastOrDefault();
         if(dayLastShaved == null) return null;
         return ActualAgeInYearsAfterDay(dayLastShaved.Value);
     }
 
     public int TotalAmountOfHidesProducedUpToAndInclusingDay(int day)
     {
-        return GetShavingScheduleUpTo(day).Count();
+        return GetShavingScheduleUpToAndIncluding(day).Count();
     }
 
-    private IEnumerable<int> GetShavingScheduleUpTo(int dayOfMeasurement)
+    private IEnumerable<int> GetShavingScheduleUpToAndIncluding(int dayOfMeasurement)
     {
         int day = DayOfFirstShave();
         while(!HasDied(day) && day <= dayOfMeasurement)

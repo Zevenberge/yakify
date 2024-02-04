@@ -29,4 +29,13 @@ public class HerdService(IYakRepository yakRepository)
                 .ToArray()
         );
     }
+
+    public async Task<StockDto> GetTotalProduce(int day, CancellationToken cancellationToken)
+    {
+        var yaks = await yakRepository.GetAll(cancellationToken);
+        return new StockDto(
+            yaks.Sum(yak => yak.TotalMilkProduceUpToAndIncludingDay(day)),
+            yaks.Sum(yak => yak.TotalAmountOfHidesProducedUpToAndInclusingDay(day))
+        );
+    }
 }
