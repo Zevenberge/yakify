@@ -19,4 +19,14 @@ public class HerdService(IYakRepository yakRepository)
         await yakRepository.DeleteAll(cancellationToken);
         await yakRepository.AddRange(yaks, cancellationToken);
     }
+
+    public async Task<HerdStatusDto> GetHerdStatus(int day, CancellationToken cancellationToken)
+    {
+        var yaks = await yakRepository.GetAll(cancellationToken);
+        return new HerdStatusDto(
+            yaks.Where(yak => !yak.HasDied(day))
+                .Select(yak => new YakStatusDto(yak.Name, yak.ActualAgeInYearsAfterDay(day), yak.AgeLastShavedInYears(day)))
+                .ToArray()
+        );
+    }
 }

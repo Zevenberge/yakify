@@ -45,7 +45,7 @@ public class Yak
 
     public bool NeedsToBeShaved(int day)
     {
-        return GetShavingSchedule().Contains(day);
+        return GetShavingSchedule().Where(d => d <= day).Contains(day);
     }
 
     public double? AgeLastShavedInYears(int day)

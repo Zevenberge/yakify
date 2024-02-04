@@ -225,4 +225,11 @@ public class YakTests
         var yak = new Yak("Adolescent-Yak", 0.9, Sex.Male);
         yak.AgeLastShavedInYears(15).Should().Be(1.0);
     }
+
+    [Fact]
+    public void Age_last_shaved_of_dead_yaks_returns_the_shave_when_they_were_still_alive()
+    {
+        var yak = new Yak("Old-Yak", 9.5, Sex.Male);
+        yak.AgeLastShavedInYears(100).Should().Be(9.86);
+    }
 }

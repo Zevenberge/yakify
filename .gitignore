@@ -485,3 +485,5 @@ $RECYCLE.BIN/
 
 # Serilog logs
 logs
+
+.vscode

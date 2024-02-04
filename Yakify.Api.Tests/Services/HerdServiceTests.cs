@@ -71,6 +71,66 @@ public class HerdServiceTests(ITestOutputHelper testOutput) : ServiceTests(testO
         });
     }
 
+    [Fact]
+    public async Task Herd_status_shows_age_and_last_shaved()
+    {
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            await service.LoadNewHerd(Herd(
+                ("Yak-1", 4, Sex.Female),
+                ("Yak-2", 8, Sex.Female),
+                ("Yak-3", 9.5, Sex.Female)
+            ), CancellationToken.None);
+        });
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            var status = await service.GetHerdStatus(13, CancellationToken.None);
+            status.Herd.Should().HaveCount(3);
+            status.Herd.Should().BeEquivalentTo([
+                new YakStatusDto("Yak-1", 4.13, 4.13),
+                new YakStatusDto("Yak-2", 8.13, 8.0),
+                new YakStatusDto("Yak-3", 9.63, 9.5),
+            ]);
+        });
+    }
+
+    [Fact]
+    public async Task Herd_status_does_not_show_dead_yaks()
+    {
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            await service.LoadNewHerd(Herd(
+                ("Yak-1", 4, Sex.Female),
+                ("Yak-2", 8, Sex.Female),
+                ("Yak-3", 9.5, Sex.Female)
+            ), CancellationToken.None);
+        });
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            var status = await service.GetHerdStatus(52, CancellationToken.None);
+            status.Herd.Should().HaveCount(2);
+            status.Herd.Should().BeEquivalentTo([
+                new YakStatusDto("Yak-1", 4.52, 4.52),
+                new YakStatusDto("Yak-2", 8.52, 8.51),
+            ]);
+        });
+    }
+
+    [Fact]
+    public async Task Herd_status_returns_empty_herd_when_there_is_no_herd_loaded()
+    {
+        await RunInTransaction(async svp =>
+        {
+            var service = svp.GetRequiredService<HerdService>();
+            var status = await service.GetHerdStatus(0, CancellationToken.None);
+            status.Herd.Should().HaveCount(0);
+        });
+    }
+
     private CreateHerdDto Herd(params (string Name, double Age, Sex Sex)[] herd)
     {
         return new CreateHerdDto(herd.Select(yak => new CreateYakDto
