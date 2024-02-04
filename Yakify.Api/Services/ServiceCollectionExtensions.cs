@@ -5,5 +5,6 @@ public static class ServiceCollectionExtensions
     public static void AddDomainServices(this IServiceCollection services)
     {
         services.AddScoped<HerdService>();
+        services.AddScoped<StockService>();
     }
 }

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
+using Yakify.Api.Models;
+using Yakify.Domain;
 using Yakify.Repository;
 using Yakify.TestBase;
 
@@ -18,5 +20,15 @@ public abstract class ServiceTests(ITestOutputHelper testOutput) : SqliteTests<Y
         await using var scope = ServiceProvider.CreateAsyncScope();
         await func(scope.ServiceProvider);
         await scope.ServiceProvider.GetRequiredService<IUnitOfWork>().SaveChangesAsync(CancellationToken.None);
+    }
+
+    protected CreateHerdDto Herd(params (string Name, double Age, Sex Sex)[] herd)
+    {
+        return new CreateHerdDto(herd.Select(yak => new CreateYakDto
+        {
+            Name = yak.Name,
+            Age = yak.Age,
+            Sex = yak.Sex,
+        }).ToArray());
     }
 }

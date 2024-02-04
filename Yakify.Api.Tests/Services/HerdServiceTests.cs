@@ -163,14 +163,4 @@ public class HerdServiceTests(ITestOutputHelper testOutput) : ServiceTests(testO
             produce.Skins.Should().Be(0);
         });
     }
-
-    private CreateHerdDto Herd(params (string Name, double Age, Sex Sex)[] herd)
-    {
-        return new CreateHerdDto(herd.Select(yak => new CreateYakDto
-        {
-            Name = yak.Name,
-            Age = yak.Age,
-            Sex = yak.Sex,
-        }).ToArray());
-    }
 }
