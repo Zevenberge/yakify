@@ -232,4 +232,36 @@ public class YakTests
         var yak = new Yak("Old-Yak", 9.5, Sex.Male);
         yak.AgeLastShavedInYears(100).Should().Be(9.86);
     }
+
+    [Theory]
+    [InlineData(2.0, 44.0)]
+    [InlineData(3.0, 41.0)]
+    [InlineData(4.0, 38.0)]
+    public void Total_milk_produce_includes_the_day_itself(double ageInYears, double milkProduce)
+    {
+        var yak = new Yak("Milk-Yak", ageInYears, Sex.Female);
+        yak.TotalMilkProduceUpToAndIncludingDay(0).Should().Be(milkProduce);
+    }
+
+    [Theory]
+    [InlineData(0, 44.00)]
+    [InlineData(1, 87.97)]
+    [InlineData(2, 131.91)]
+    [InlineData(3, 175.82)]
+    public void Total_milk_produce_is_total_of_days_before(int day, double totalMilk)
+    {
+        var yak = new Yak("Milk-Yak", 2.0, Sex.Female);
+        yak.TotalMilkProduceUpToAndIncludingDay(day).Should().Be(totalMilk);
+    }
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 1)]
+    [InlineData(2, 1)]
+    [InlineData(13, 2)]
+    public void Total_hide_produce_is_amount_of_times_shaved(int day, int hides)
+    {
+        var yak = new Yak("Hide-Yak", 0.99, Sex.Female);
+        yak.TotalAmountOfHidesProducedUpToAndInclusingDay(day).Should().Be(hides);
+    }
 }

@@ -33,6 +33,11 @@ public class Yak
         return 50.0 - ActualAgeInDaysAfterDay(day) * 0.03;
     }
 
+    public double TotalMilkProduceUpToAndIncludingDay(int day)
+    {
+        return Enumerable.Range(0, day + 1).Select(GetMilkProduceOnDay).Sum();
+    }
+
     public bool HasDied(int day) => IsDeadOnActualAge(ActualAgeInDaysAfterDay(day));
 
     private static bool IsDeadOnActualAge(int ageInDays)
@@ -45,20 +50,25 @@ public class Yak
 
     public bool NeedsToBeShaved(int day)
     {
-        return GetShavingSchedule().Where(d => d <= day).Contains(day);
+        return GetShavingScheduleUpTo(day).Contains(day);
     }
 
     public double? AgeLastShavedInYears(int day)
     {
-        var dayLastShaved = GetShavingSchedule().Cast<int?>().LastOrDefault(d => d <= day);
+        var dayLastShaved = GetShavingScheduleUpTo(day).Cast<int?>().LastOrDefault();
         if(dayLastShaved == null) return null;
         return ActualAgeInYearsAfterDay(dayLastShaved.Value);
     }
 
-    private IEnumerable<int> GetShavingSchedule()
+    public int TotalAmountOfHidesProducedUpToAndInclusingDay(int day)
+    {
+        return GetShavingScheduleUpTo(day).Count();
+    }
+
+    private IEnumerable<int> GetShavingScheduleUpTo(int dayOfMeasurement)
     {
         int day = DayOfFirstShave();
-        while(!HasDied(day))
+        while(!HasDied(day) && day <= dayOfMeasurement)
         {
             yield return day;
             day += ShavingInterval(day);
