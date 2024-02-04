@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
     public static void AddRepositories(this IServiceCollection services, Action<DbContextOptionsBuilder> configure)
     {
         services.AddDbContext<YakifyDbContext>(configure);
+        services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IYakRepository, YakRepository>();
         services.AddScoped<IUnitOfWork>(svc => svc.GetRequiredService<YakifyDbContext>());
     }
