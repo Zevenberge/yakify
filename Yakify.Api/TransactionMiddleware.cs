@@ -7,10 +7,25 @@ public static class TransactionMiddleware
     public static void UseTransaction(this WebApplication app)
     {
         app.Use(async (context, next) => {
-            await next();
+            var dbContext = context.RequestServices.GetRequiredService<YakifyDbContext>();
+            using var transaction = await dbContext.Database.BeginTransactionAsync(context.RequestAborted);
+            try
+            {
+                await next();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
             if(IsSuccessStatusCode(context.Response.StatusCode))
             {
-                await context.RequestServices.GetRequiredService<IUnitOfWork>().SaveChangesAsync(context.RequestAborted);
+                await dbContext.SaveChangesAsync(context.RequestAborted);
+                await transaction.CommitAsync(context.RequestAborted);
+            }
+            else
+            {
+                await transaction.RollbackAsync();
             }
         });
     }
