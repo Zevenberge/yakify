@@ -94,4 +94,12 @@ public class AdminControllerTests(YakifyWebApplicationFactory<Program> factory) 
         body!.Milk.Should().Be(515.35);
         body.Skins.Should().Be(2);
     }
+
+    [Fact]
+    public async Task Get_stock_400_Bad_request()
+    {
+        var client = Factory.CreateClient();
+        var response = await client.GetAsync("/yak-shop/stock/-1");
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
 }
