@@ -44,6 +44,13 @@ public class AdminController: ControllerBase
         return Ok(await herdService.GetHerdStatus(day, cancellationToken));
     }
 
+    /// <summary>
+    /// Gets the stock at the requested day.
+    /// </summary>
+    /// <param name="day">The day at which to view the stock</param>
+    /// <param name="stockService"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("/yak-shop/stock/{day}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StockDto))]
