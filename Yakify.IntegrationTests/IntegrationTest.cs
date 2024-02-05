@@ -5,6 +5,7 @@ using Yakify.Repository;
 
 namespace Yakify.IntegrationTests;
 
+[CollectionDefinition("IntegrationTests", DisableParallelization = true)]
 public abstract class IntegrationTest : IClassFixture<YakifyWebApplicationFactory<Program>>, IDisposable
 {
     protected IntegrationTest(YakifyWebApplicationFactory<Program> factory)
@@ -22,6 +23,22 @@ public abstract class IntegrationTest : IClassFixture<YakifyWebApplicationFactor
     {
         using var scope = Factory.Services.CreateScope();
         await func(scope.ServiceProvider.GetRequiredService<TService>());
+    }
+
+    protected async Task CreateYak(string name, double age, string sex)
+    {
+        var client = Factory.CreateClient();
+        var response = await client.PostAsJsonAsync("/yak-shop/load", new
+        {
+            Herd = new[] {
+                new {
+                    Name = name,
+                    Age = age,
+                    Sex = sex
+                }
+            }
+        });
+        response.EnsureSuccessStatusCode();
     }
 
     protected virtual void Dispose(bool disposing)

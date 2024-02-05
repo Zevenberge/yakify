@@ -43,4 +43,15 @@ public class AdminController: ControllerBase
     {
         return Ok(await herdService.GetHerdStatus(day, cancellationToken));
     }
+
+    [HttpGet]
+    [Route("/yak-shop/stock/{day}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StockDto))]
+    public async Task<IActionResult> Stock(
+        [FromRoute] ushort day,
+        [FromServices] StockService stockService,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await stockService.GetStock(day, cancellationToken));
+    }
 }
