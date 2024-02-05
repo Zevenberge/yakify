@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.Api.Tests", "Yakify.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.TestBase", "Yakify.TestBase\Yakify.TestBase.csproj", "{E5B7B6CC-321A-4E0D-8F6E-26A4271A823C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yakify.IntegrationTests", "Yakify.IntegrationTests\Yakify.IntegrationTests.csproj", "{BCD4D136-3DCA-4053-8A32-87F164A7674E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{E5B7B6CC-321A-4E0D-8F6E-26A4271A823C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5B7B6CC-321A-4E0D-8F6E-26A4271A823C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5B7B6CC-321A-4E0D-8F6E-26A4271A823C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD4D136-3DCA-4053-8A32-87F164A7674E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD4D136-3DCA-4053-8A32-87F164A7674E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD4D136-3DCA-4053-8A32-87F164A7674E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD4D136-3DCA-4053-8A32-87F164A7674E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

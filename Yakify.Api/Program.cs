@@ -1,6 +1,12 @@
-using Yakify.Api;
+namespace Yakify.Api;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Configure();
-await app.RunMigrations();
-await app.RunAsync();
+public class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        var app = builder.Configure();
+        await app.RunMigrations();
+        await app.RunAsync();
+    }
+}

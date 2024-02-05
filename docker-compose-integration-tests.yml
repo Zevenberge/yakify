@@ -1,0 +1,9 @@
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 5433:1433
+    environment:
+      - MSSQL_PID=Developer
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Testing-1-2-Yak
