@@ -6,5 +6,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<HerdService>();
         services.AddScoped<StockService>();
+        services.AddScoped<OrderService>();
     }
 }
