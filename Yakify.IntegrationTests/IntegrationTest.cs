@@ -17,6 +17,13 @@ public abstract class IntegrationTest : IClassFixture<YakifyWebApplicationFactor
 
     public WebApplicationFactory<Program> Factory { get; }
 
+    protected async Task RunWithScopedService<TService>(Func<TService, Task> func)
+        where TService : notnull
+    {
+        using var scope = Factory.Services.CreateScope();
+        await func(scope.ServiceProvider.GetRequiredService<TService>());
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (!disposedValue)
