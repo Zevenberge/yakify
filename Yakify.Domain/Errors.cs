@@ -3,6 +3,7 @@ namespace Yakify.Domain;
 public static class Errors
 {
     public const string ORDER_CUSTOMER_CANNOT_BE_EMPTY = "Order customer cannot be empty";
+    public const string ORDER_DAY_CANNOT_BE_NEGATIVE = "Order day cannot be negative";
     public const string ORDER_MILK_CANNOT_BE_EMPTY = "Order milk cannot be empty";
     public const string ORDER_MILK_CANNOT_BE_NEGATIVE = "We are not buying milk at the moment";
     public const string ORDER_SKINS_CANNOT_BE_EMPTY = "Order skins cannot be empty";

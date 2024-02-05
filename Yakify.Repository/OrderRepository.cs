@@ -23,4 +23,10 @@ public class OrderRepository(YakifyDbContext context, ILogger<OrderRepository> l
         logger.LogDebug("Getting all orders");
         return context.Order.ToArrayAsync();
     }
+
+    public Task<Order[]> GetUpToDay(int day, CancellationToken cancellationToken)
+    {
+        logger.LogDebug("Getting all orders up to {Day}", day);
+        return context.Order.Where(o => o.Day <= day).ToArrayAsync();
+    }
 }

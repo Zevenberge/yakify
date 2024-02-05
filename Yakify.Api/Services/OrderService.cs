@@ -19,7 +19,8 @@ public class OrderService(IOrderRepository orderRepository, StockService stockSe
         }
         var order = new Order(orderDto.Customer, 
             normalizedOrder.Milk, 
-            normalizedOrder.Skins);
+            normalizedOrder.Skins,
+            day);
         await orderRepository.Add(order, cancellationToken);
         return normalizedOrder;
     }

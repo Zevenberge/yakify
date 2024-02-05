@@ -41,6 +41,7 @@ public class OrderServiceTests(ITestOutputHelper testOutput) : ServiceTests(test
             orders[0].Customer.Should().Be("Garry");
             orders[0].Milk.Should().Be(1300);
             orders[0].Skins.Should().Be(3);
+            orders[0].Day.Should().Be(15);
         });
     }
 
