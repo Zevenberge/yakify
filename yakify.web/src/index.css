@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,6 +9,7 @@ body {
 
 :root {
   --background: #282c34;
+  --background-contrast: #6a7894;
   --text-primary: white;
   --highlight-primary: #61dafb;
 }
@@ -23,6 +24,37 @@ body {
   justify-content: center;
 }
 
+button {
+  border-radius: 1rem;
+  height: 2rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+button.primary {
+  background-color: var(--highlight-primary);
+  color: var(--text-primary);
+}
+
+button.secondary {
+  border-style: solid;
+  border-color: var(--background);
+  background-color: var(--background-contrast);
+  color: var(--text-primary);
+}
+
+.card {
+  font-size: calc(10px + 1vmin);
+  color: var(--text-primary);
+  background-color: var(--background-contrast);
+  border: var(--text-primary);
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  display: block;
+}
+
 .link {
   color: var(--highlight-primary);
 }
@@ -31,7 +63,8 @@ body {
   display: none;
 }
 
-code,.code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+code,
+.code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

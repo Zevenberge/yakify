@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
+import { DateContextProvider } from './DateContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className='app'>
-      <RouterProvider router={router} />
+      <DateContextProvider value={1}>
+        <RouterProvider router={router} />
+      </DateContextProvider>
     </div>
   </React.StrictMode>
 );

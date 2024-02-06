@@ -1,0 +1,22 @@
+.DatePicker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    color: var(--highlight-primary);
+}
+
+.DatePicker-button {
+    width: 2rem;
+    border: none;
+    background-color: var(--background-contrast);
+    color: var(--text-primary);
+    font-size: initial;
+}
+
+.DatePicker-popup {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}

@@ -4,7 +4,12 @@
     flex-direction: row;
     font-weight: 600;
     font-size: 1.5em;
+    justify-content: space-between;
     align-items: center;
+    border-bottom-style: solid;
+    border-color: var(--background-contrast);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .Header-link {
