@@ -1,0 +1,15 @@
+.Order-list {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.Order-list dt {
+    grid-column: 1;
+    text-align: left;
+    font-weight: 600;
+}
+
+.Order-list dd {
+    grid-column: 2;
+    text-align: right;
+}
