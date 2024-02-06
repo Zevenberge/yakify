@@ -1,0 +1,21 @@
+.Header-main {
+    width: 100wh;
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+.Header-link {
+    text-decoration: none;
+    color: var(--highlight-primary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.Header-link:hover {
+    text-decoration: underline;
+}
