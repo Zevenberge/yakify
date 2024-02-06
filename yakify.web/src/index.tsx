@@ -9,11 +9,12 @@ import { DateContextProvider } from './DateContext';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const appRouter = router;
 root.render(
   <React.StrictMode>
     <div className='app'>
       <DateContextProvider value={1}>
-        <RouterProvider router={router} />
+        <RouterProvider router={appRouter} />
       </DateContextProvider>
     </div>
   </React.StrictMode>

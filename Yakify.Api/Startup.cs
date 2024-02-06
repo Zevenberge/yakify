@@ -9,13 +9,17 @@ namespace Yakify.Api;
 
 public static class Startup
 {
+    private const string FRONTEND_CORS = "_cors";
     public static WebApplication Configure(this WebApplicationBuilder builder)
     {
         builder.AddLogging();
         builder.Services.AddApplicationServices(options =>
-            options.UseSqlServer(builder.Configuration["ConnectionString"], 
+            options.UseSqlServer(builder.Configuration["ConnectionString"],
                 o => o.MigrationsAssembly(typeof(YakifyDbContext).Assembly.FullName)
             ));
+        builder.Services.AddCors(options =>
+            options.AddPolicy(name: FRONTEND_CORS, policy =>
+                policy.WithOrigins(builder.Configuration["FrontEnd"] ?? throw new StartupException("FrontEnd not configured"))));
         var app = builder.Build();
         app.ConfigureRequestPipeline();
         return app;
@@ -46,6 +50,8 @@ public static class Startup
         app.UseSwaggerInDevelopment();
         app.UseHttpsRedirection();
         app.UseTransaction();
+        app.UseRouting();
+        app.UseCors(FRONTEND_CORS);
         app.MapControllers();
     }
 }
