@@ -1,20 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { RouterProvider } from 'react-router-dom';
-import router from './router';
-import { DateContextProvider } from './DateContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import { DateContextProvider } from "./contexts/DateContext";
+import { LastOrderContextProvider } from "./contexts/LastOrderContext";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 const appRouter = router;
 root.render(
   <React.StrictMode>
-    <div className='app'>
+    <div className="app">
       <DateContextProvider value={1}>
-        <RouterProvider router={appRouter} />
+        <LastOrderContextProvider value={null}>
+          <RouterProvider router={appRouter} />
+        </LastOrderContextProvider>
       </DateContextProvider>
     </div>
   </React.StrictMode>

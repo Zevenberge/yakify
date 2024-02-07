@@ -5,6 +5,7 @@ import { useNumberInput, useTextInput } from "./hooks/useInput";
 import { useOrder } from "./hooks/useOrder";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useLastOrder } from "./contexts/LastOrderContext";
 
 export default function Order() {
   const stock = useStock();
@@ -55,9 +56,13 @@ function StockCard(props: { children: React.ReactNode }) {
 
 function useSubmitOrder() {
   const navigate = useNavigate();
+  const [_, setLastOrder] = useLastOrder();
   const [error, setError] = useState<any>(null);
   const { inProgress, post } = useOrder({
-    onSuccess: () => navigate("/thank-you"),
+    onSuccess: (result, status) => {
+      setLastOrder({ ...result, status });
+      return navigate("/thank-you");
+    },
     onFailure: setError,
   });
   return {

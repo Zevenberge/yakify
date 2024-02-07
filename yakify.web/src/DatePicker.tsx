@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDate } from "./DateContext";
+import { useDate } from "./contexts/DateContext";
 import "./DatePicker.css";
 import Calendar from "./icons/Calendar";
 import { useNumberInput } from "./hooks/useInput";

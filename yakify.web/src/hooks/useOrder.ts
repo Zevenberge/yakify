@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDate } from "../DateContext";
+import { useDate } from "../contexts/DateContext";
 import { PostProps, usePost } from "./usePost";
 
 export type PlaceOrderDto = {
@@ -8,8 +8,8 @@ export type PlaceOrderDto = {
 };
 
 export type OrderDto = {
-  milk?: number;
-  skins?: number;
+  milk: number;
+  skins: number;
 };
 
 export function useOrder(props: Omit<PostProps<OrderDto>, 'url'>) {

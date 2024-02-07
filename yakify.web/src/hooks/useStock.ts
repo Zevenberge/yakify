@@ -1,4 +1,4 @@
-import { useDate } from "../DateContext";
+import { useDate } from "../contexts/DateContext";
 import { useGet } from "./useGet";
 
 export type StockDto = { milk: number; skins: number };
