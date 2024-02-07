@@ -12,6 +12,7 @@ body {
   --background-contrast: #6a7894;
   --text-primary: white;
   --highlight-primary: #61dafb;
+  --min-page-size: 600px;
 }
 
 .app {
@@ -24,7 +25,7 @@ body {
   justify-content: center;
 }
 
-button {
+button,.button {
   border-radius: 1rem;
   height: 2rem;
   text-align: center;
@@ -33,12 +34,12 @@ button {
   font-size: inherit;
 }
 
-button.primary {
+button.primary,.button.primary {
   background-color: var(--highlight-primary);
   color: var(--text-primary);
 }
 
-button.secondary {
+button.secondary,.button.secondary {
   border-style: solid;
   border-color: var(--background);
   background-color: var(--background-contrast);

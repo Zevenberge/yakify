@@ -1,15 +1,31 @@
-.Order-list {
-    display: grid;
-    grid-template-columns: auto auto;
+.Order {
+    display: flex;
+    flex-direction: row;
+    gap: calc(0.05 * var(--min-page-size));
 }
 
-.Order-list dt {
+.Order .card {
+    min-height: calc(0.5 * var(--min-page-size));
+    min-width: calc(0.5 * var(--min-page-size));
+}
+
+.Order-list {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: auto 5px auto;
+    row-gap: 5px;
+}
+
+.Order-list dt,.Order-list label {
     grid-column: 1;
     text-align: left;
     font-weight: 600;
 }
 
-.Order-list dd {
-    grid-column: 2;
+.Order-list dd,.Order-list input {
+    grid-column: 3;
+}
+
+.Order-list dd,.Order-list input[type=number] {
     text-align: right;
 }

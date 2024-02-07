@@ -1,15 +1,16 @@
 import Yak from "./icons/Yak";
 import './Header.css';
 import DatePicker from "./DatePicker";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <header className="Header-main">
-      <a className="Header-link" href="/">
+      <Link to="/" className="Header-link">
         <Yak />
         <span>Yakify</span>
         <span className="visually-hidden">Go to homepage</span>
-      </a>
+      </Link>
       <DatePicker/>
     </header>
   );

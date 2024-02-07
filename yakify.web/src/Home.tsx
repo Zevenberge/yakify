@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Order } from "./icons/Order";
+import "./Home.css";
 
 export default function Home() {
     return <div className="Home">
