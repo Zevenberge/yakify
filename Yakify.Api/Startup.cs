@@ -17,11 +17,7 @@ public static class Startup
             options.UseSqlServer(builder.Configuration["ConnectionString"],
                 o => o.MigrationsAssembly(typeof(YakifyDbContext).Assembly.FullName)
             ));
-        builder.Services.AddCors(options =>
-            options.AddPolicy(name: FRONTEND_CORS, policy =>
-                policy.WithOrigins(builder.Configuration["FrontEnd"] ?? throw new StartupException("FrontEnd not configured"))
-                    .AllowAnyHeader().AllowAnyMethod())
-        );
+        builder.Services.AddClientServices(builder.Configuration["FrontEnd"] ?? throw new StartupException("FrontEnd not configured"));
         var app = builder.Build();
         app.ConfigureRequestPipeline();
         return app;
@@ -47,13 +43,24 @@ public static class Startup
         services.AddSwagger();
     }
 
+    private static void AddClientServices(this IServiceCollection services, string frontEndOrigin)
+    {
+        services.AddCors(options =>
+            options.AddPolicy(name: FRONTEND_CORS, policy =>
+                policy.WithOrigins(frontEndOrigin)
+                    .AllowAnyHeader().AllowAnyMethod().AllowCredentials())
+        );
+        services.AddSignalR();
+    }
+
     private static void ConfigureRequestPipeline(this WebApplication app)
     {
         app.UseSwaggerInDevelopment();
-        app.UseHttpsRedirection();
+        app.UseNotifications();
         app.UseTransaction();
         app.UseRouting();
         app.UseCors(FRONTEND_CORS);
         app.MapControllers();
+        app.MapHub<StockHub>("/ws/stock");
     }
 }

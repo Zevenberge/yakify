@@ -22,6 +22,7 @@ public class CustomerController: ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(OrderDto))]
     [ProducesResponseType(StatusCodes.Status206PartialContent, Type = typeof(OrderDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Notification(typeof(StockHub))]
     public async Task<IActionResult> Order(
         [FromRoute] ushort day,
         [FromBody] PlaceOrderDto dto,

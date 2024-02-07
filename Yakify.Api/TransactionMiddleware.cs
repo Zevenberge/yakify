@@ -6,7 +6,8 @@ public static class TransactionMiddleware
 {
     public static void UseTransaction(this WebApplication app)
     {
-        app.Use(async (context, next) => {
+        app.Use(async (context, next) =>
+        {
             var dbContext = context.RequestServices.GetRequiredService<YakifyDbContext>();
             using var transaction = await dbContext.Database.BeginTransactionAsync(context.RequestAborted);
             try
@@ -18,7 +19,7 @@ public static class TransactionMiddleware
                 await transaction.RollbackAsync();
                 throw;
             }
-            if(IsSuccessStatusCode(context.Response.StatusCode))
+            if (IsSuccessStatusCode(context.Response.StatusCode))
             {
                 await dbContext.SaveChangesAsync(context.RequestAborted);
                 await transaction.CommitAsync(context.RequestAborted);
