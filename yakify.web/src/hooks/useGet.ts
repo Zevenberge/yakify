@@ -8,7 +8,7 @@ export type GetResult<T> = {
 } & FetchResult<T>;
 
 export function useGet<T>(url: string): GetResult<T> {
-    const configuration = useConfiguration();
+  const configuration = useConfiguration();
   const [counter, setCounter] = useState(0);
   const [result, setResult] = useState<FetchResult<T>>({ success: null });
 
@@ -27,7 +27,7 @@ export function useGet<T>(url: string): GetResult<T> {
         setResult({ success: false });
       }
     }
-    if(!configuration) return;
+    if (!configuration) return;
     getData();
   }, [url, counter, configuration]);
 

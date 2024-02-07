@@ -1,7 +1,10 @@
 import { GetResult } from "./hooks/useGet";
 import { StockDto, useStock } from "./hooks/useStock";
 import "./Order.css";
-import { useNumberInput } from "./hooks/useInput";
+import { useNumberInput, useTextInput } from "./hooks/useInput";
+import { useOrder } from "./hooks/useOrder";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Order() {
   const stock = useStock();
@@ -50,15 +53,30 @@ function StockCard(props: { children: React.ReactNode }) {
   );
 }
 
+function useSubmitOrder() {
+  const navigate = useNavigate();
+  const [error, setError] = useState<any>(null);
+  const { inProgress, post } = useOrder({
+    onSuccess: () => navigate("/thank-you"),
+    onFailure: setError,
+  });
+  return {
+    inProgress,
+    error,
+    post,
+  };
+}
+
 function OrderForm() {
+  const { inProgress, error, post } = useSubmitOrder();
   const [milk, setMilk] = useNumberInput(0);
   const [skins, setSkins] = useNumberInput(0);
+  const [customer, setCustomer] = useTextInput("");
 
-  async function submit(
-    event: React.FormEvent<HTMLFormElement>
-  ) {
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
+    post({ customer, order: { milk, skins } });
   }
 
   return (
@@ -85,7 +103,21 @@ function OrderForm() {
           value={skins}
           onChange={setSkins}
         ></input>
-        <input type="submit" value="Go!" className="button primary"></input>
+        <label htmlFor="customer">Your name</label>
+        <input
+          id="customer"
+          type="text"
+          required
+          value={customer}
+          onChange={setCustomer}
+        ></input>
+        {error && <span className="error">{error}</span>}
+        <input
+          type="submit"
+          value="Go!"
+          className="button primary"
+          disabled={inProgress}
+        ></input>
       </form>
     </div>
   );

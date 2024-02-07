@@ -29,3 +29,8 @@
 .Order-list dd,.Order-list input[type=number] {
     text-align: right;
 }
+
+.Order-list .error {
+    grid-column: 1 / 4;
+    color: var(--text-error);
+}

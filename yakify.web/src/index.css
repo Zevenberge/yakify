@@ -11,6 +11,7 @@ body {
   --background: #282c34;
   --background-contrast: #6a7894;
   --text-primary: white;
+  --text-error: #cc1111;
   --highlight-primary: #61dafb;
   --min-page-size: 600px;
 }
