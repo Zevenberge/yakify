@@ -17,6 +17,6 @@ public abstract class RepositoryTests(ITestOutputHelper testOutput) : SqliteTest
     {
         await using var scope = ServiceProvider.CreateAsyncScope();
         await func(scope.ServiceProvider.GetRequiredService<TRepository>());
-        await scope.ServiceProvider.GetRequiredService<IUnitOfWork>().SaveChangesAsync(CancellationToken.None);
+        await scope.ServiceProvider.GetRequiredService<YakifyDbContext>().SaveChangesAsync(CancellationToken.None);
     }
 }

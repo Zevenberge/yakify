@@ -19,7 +19,7 @@ public abstract class ServiceTests(ITestOutputHelper testOutput) : SqliteTests<Y
     {
         await using var scope = ServiceProvider.CreateAsyncScope();
         await func(scope.ServiceProvider);
-        await scope.ServiceProvider.GetRequiredService<IUnitOfWork>().SaveChangesAsync(CancellationToken.None);
+        await scope.ServiceProvider.GetRequiredService<YakifyDbContext>().SaveChangesAsync(CancellationToken.None);
     }
 
     protected CreateHerdDto Herd(params (string Name, double Age, Sex Sex)[] herd)
