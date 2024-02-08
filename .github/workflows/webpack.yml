@@ -1,4 +1,4 @@
-name: React
+name: Node
 
 on:
   push:
@@ -13,6 +13,8 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+    env:
+      WORKING_DIRECTORY: yakify.web
 
     steps:
     - uses: actions/checkout@v3
@@ -24,12 +26,16 @@ jobs:
 
     - name: Restore dependencies
       run: npm ci
+      working-directory: ${{ env.WORKING_DIRECTORY }}
 
     - name: Check for vulnerabilities
       run: npm audit --omit dev
+      working-directory: ${{ env.WORKING_DIRECTORY }}
 
     - name: Build front-end
       run: npm build
+      working-directory: ${{ env.WORKING_DIRECTORY }}
 
     - name: Test front-end
       run: npm test
+      working-directory: ${{ env.WORKING_DIRECTORY }}
