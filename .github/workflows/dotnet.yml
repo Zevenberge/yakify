@@ -20,6 +20,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Check vulnerable dependencies
+      run: dotnet list package --vulnerable
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
