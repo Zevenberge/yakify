@@ -1,3 +1,6 @@
+![Back-end](https://github.com/Zevenberge/yakify/actions/workflows/dotnet.yml/badge.svg)
+![Front-end](https://github.com/Zevenberge/yakify/actions/workflows/webpack.yml/badge.svg)
+
 # Yakify - Yak Imperium
 
 This repository contains the application for an imaginary webshop featuring yaks. Yaks give produce which can be ordered through the front-end. The app does not have a notion of time. A customer and shepherd can time travel between days to view stock and order at their desired day.
