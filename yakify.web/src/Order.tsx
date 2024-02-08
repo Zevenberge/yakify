@@ -56,6 +56,7 @@ function StockCard(props: { children: React.ReactNode }) {
 
 function useSubmitOrder() {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [_, setLastOrder] = useLastOrder();
   const [error, setError] = useState<any>(null);
   const { inProgress, post } = useOrder({

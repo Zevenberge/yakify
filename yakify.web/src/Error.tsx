@@ -5,7 +5,7 @@ export default function Error() {
   const error: any = useRouteError();
   const navigate = useNavigate();
   useEffect(() => {
-    if (error && error.status == 404) {
+    if (error && error.status === 404) {
       navigate("/");
     }
   });

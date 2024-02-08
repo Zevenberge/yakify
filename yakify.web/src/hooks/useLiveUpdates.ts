@@ -13,5 +13,5 @@ export function useLiveUpdates(props: { url: string; reload: () => void }) {
         return () => {
             connection.stop();
         };
-    }, [configuration?.backEnd, props.url]);
+    }, [configuration?.backEnd, props.url, props.reload]);
 }

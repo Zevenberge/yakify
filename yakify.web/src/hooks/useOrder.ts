@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useDate } from "../contexts/DateContext";
 import { PostProps, usePost } from "./usePost";
 
