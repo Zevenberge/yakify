@@ -1,0 +1,35 @@
+name: React
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Restore dependencies
+      run: npm ci
+
+    - name: Check for vulnerabilities
+      run: npm audit --omit dev
+
+    - name: Build front-end
+      run: npm build
+
+    - name: Test front-end
+      run: npm test
